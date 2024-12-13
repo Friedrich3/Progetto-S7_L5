@@ -17,6 +17,7 @@ let singleProduct = {};
 
 
 const param = new URLSearchParams(window.location.search).get("id");
+const url = endPoint + param;
 
 class Prodotto {
     constructor(_name, _description, _brand, _imageUrl, _price) {
@@ -37,13 +38,13 @@ function init() {
         btnDelete.classList.add("d-none");
         boolean = true;
     } else {
-        //Get sui dati del singolo prodotto -> popolo il campi.value con i valori del prodotto selezionato, ->
         //->creo due eventListner sul btn Delete e quello insert, l'insert fara una PUT con i nuovi dati inseriti, la delete fara una DELETE dell'oggetto dal api con un alert-> reset form;
         btnDelete.classList.remove("d-none");
         backofficeTitle.innerText = "Modifica prodotto";
         btnManage.innerText = "EDIT";
         boolean = false;
         getData();
+        buttonDelete();
     };
     formSubmit(boolean);
 };
@@ -78,7 +79,6 @@ async function postData() {
 }
 
 async function getData() {
-    let url = endPoint + param;
     try {
         let response = await fetch(url, {
             method: "GET",
@@ -96,13 +96,61 @@ async function getData() {
     }
 };
 
-function printForm(oggetto){
+function printForm(oggetto) {
     title.value = oggetto.name;
     brand.value = oggetto.brand;
-    price.value =  oggetto.price;
+    price.value = oggetto.price;
     imageUrl.value = oggetto.imageUrl;
     description.value = oggetto.description;
 };
 
+async function putData() {
+    let product = new Prodotto(title.value, description.value, brand.value, imageUrl.value, parseInt(price.value));
+    try {
+        await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(product),
+            headers: {
+                "authorization": tokenAuth,
+                "Content-Type": "application/json",
+            }
+        });
+    } catch (error) {
+
+    };
+
+}
+
+function buttonDelete() {
+    btnDelete.addEventListener("click", function (e) {
+        e.preventDefault();
+        let conferma = confirm("Vuoi procedere all'eliminazione del prodotto?");
+        if (conferma) {
+            let realConferma = confirm("SEI VERAMENTE SICURO DI VOLER CANCELLARE I DATI?");
+            if (realConferma) {
+                deleteData();
+            } else {
+                return;
+            }
+        } else {
+            return;
+        };
+    });
+};
+
+async function deleteData() {
+    try {
+        await fetch(url, {
+            method: "DELETE",
+            headers: {
+                "authorization": tokenAuth,
+                "Content-Type": "application/json",
+            }
+        })
+    }catch(error){
+        console.log("errore: "+ error);
+    }
+    window.location = "backoffice.html";
+}
 
 
