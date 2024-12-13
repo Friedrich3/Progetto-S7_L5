@@ -49,7 +49,7 @@ function init(){
         productCard.setAttribute("id",`product-${i}`);
         productCard.classList.add("col-3");
 
-        card.classList.add("card");
+        card.classList.add("card", "border-0");
 
         image.setAttribute("src", `${array[i].imageUrl}`);
         image.setAttribute("alt", "Immagine Prodotto");
