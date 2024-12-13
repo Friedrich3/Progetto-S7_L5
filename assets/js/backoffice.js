@@ -77,6 +77,7 @@ async function postData() {
     } catch (error) {
         console.log("ERROR: " + error);
     }
+    formSection.reset();
 }
 
 async function getData() {
@@ -148,22 +149,36 @@ async function deleteData() {
                 "Content-Type": "application/json",
             }
         })
-    }catch(error){
-        console.log("errore: "+ error);
+    } catch (error) {
+        console.log("errore: " + error);
     }
     window.location = "backoffice.html";
 }
 
-function checkBtnManage(){
-    formSection.addEventListener("keyup",function(){
-        if(title.value != "" && description.value != "" && brand.value != "" && imageUrl.value != "" && price.value != ""){
+function checkBtnManage() {
+    formSection.addEventListener("keyup", function () {
+        if (title.value != "" && description.value != "" && brand.value != "" && imageUrl.value != "" && price.value != "") {
             console.log("ENABLED")
             btnManage.removeAttribute("disabled");
-    
-        }else{
+
+        } else {
             console.log("DIsabled")
             btnManage.setAttribute("disabled", "true");
-        }   
+        }
     });
-    
+
 }
+
+//SE si sta aggiungendo un elemento il form si resetterà e basta, se il form è nella configurazione "modifica" il reset non azzererà i campi ma riporterà il tutto all'oggetto presente nel db
+function resetform() {
+    let conferma = confirm("Stai per resettare il form");
+    if (conferma) {
+        if (boolean) {
+            formSection.reset();
+        } else {
+            getData();
+        }
+    } else {
+        return;
+    }
+};
