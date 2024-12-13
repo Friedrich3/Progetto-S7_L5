@@ -63,11 +63,11 @@ function init(){
         cardDescription.classList.add("card-text");
         cardDescription.innerText = `${array[i].description}`;
         
-        cardBrand.classList.add("card-text");
-        cardBrand.innerText = `Brand: ${array[i].brand}`;
+        cardBrand.classList.add("card-text","fw-bold");
+        cardBrand.innerText = `${array[i].brand}`;
 
-        cardPrice.classList.add("card-text","fw-bold");
-        cardPrice.innerText = `${array[i].price} €`;
+        cardPrice.classList.add("card-text","fw-bold","fs-3");
+        cardPrice.innerText = `${array[i].price}€`;
 
         btnModify.classList.add("btn", "btn-warning");
         btnModify.innerText = "Modifica";

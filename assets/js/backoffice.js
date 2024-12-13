@@ -6,11 +6,20 @@ let backofficeTitle = document.getElementById("backofficeTitle");
 let btnManage = document.getElementById("productManage");
 
 
+const title = document.getElementById("productName");
+const description = document.getElementById("productDescription");
+const brand = document.getElementById("productBrand");
+const imageUrl = document.getElementById("productUrl");
+const price = document.getElementById("productPrice");
+
+let boolean; //Valore booleano che verrà gestito se è presente o meno l'id nell URL
+let singleProduct = {};
+
 
 const param = new URLSearchParams(window.location.search).get("id");
 
-class Prodotto{
-    constructor(_name,_description,_brand,_imageUrl,_price){  
+class Prodotto {
+    constructor(_name, _description, _brand, _imageUrl, _price) {
         this.name = _name;
         this.description = _description;
         this.brand = _brand;
@@ -22,29 +31,78 @@ class Prodotto{
 
 document.addEventListener("load", init());
 
-function init(){
-    if(!param){
-        //SE non è presente FACCIO SCOMPARIRE IL BOTTONE E AGGIUNGO UN EVENT LISTENER SUL CLICK DEL FORM (Aggiungere controllo sul bottone), DOPO IL CLICK VIENE ESEGUITA UNA POST sull API per andare a inserire il prodotto , e poi verrà resettato il form
+function init() {
+    if (!param) {
+        //SE non è presente (Aggiungere controllo sul bottone)
         btnDelete.classList.add("d-none");
-    }else{
-        //SE e' PRESENTE Faccio comparire il bottone di delete e cambio il titolo in modifica prodotto-> GEt sui dati del singolo prodotto -> popolo il campi.value con i valori del prodotto selezionato, ->
+        boolean = true;
+    } else {
+        //Get sui dati del singolo prodotto -> popolo il campi.value con i valori del prodotto selezionato, ->
         //->creo due eventListner sul btn Delete e quello insert, l'insert fara una PUT con i nuovi dati inseriti, la delete fara una DELETE dell'oggetto dal api con un alert-> reset form;
-        fetchProduct();
         btnDelete.classList.remove("d-none");
-        backofficeTitle.innerText ="Modifica prodotto";
+        backofficeTitle.innerText = "Modifica prodotto";
         btnManage.innerText = "EDIT";
-        
-        
+        boolean = false;
+        getData();
+    };
+    formSubmit(boolean);
+};
+
+function formSubmit(boolean) {
+    btnManage.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(boolean);//QUA ENTRA TRUE
+        if (boolean) {
+            postData();
+        } else {
+            putData();
+        }
+    });
+
+};
+
+async function postData() {
+    let product = new Prodotto(title.value, description.value, brand.value, imageUrl.value, parseInt(price.value));
+    try {
+        await fetch(endPoint, {
+            method: "POST",
+            body: JSON.stringify(product),
+            headers: {
+                "authorization": tokenAuth,
+                "Content-Type": "application/json",
+            }
+        });
+    } catch (error) {
+        console.log("ERROR: " + error);
     }
+}
+
+async function getData() {
+    let url = endPoint + param;
+    try {
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "authorization": tokenAuth,
+                "Content-Type": "application/json"
+            }
+        });
+        let data = await response.json();
+        singleProduct = data;
+        //console.log(singleProduct); ARRIVA l'oggetto desiderato
+        printForm(singleProduct);
+    } catch (error) {
+        console.log("errore: " + error);
+    }
+};
+
+function printForm(oggetto){
+    title.value = oggetto.name;
+    brand.value = oggetto.brand;
+    price.value =  oggetto.price;
+    imageUrl.value = oggetto.imageUrl;
+    description.value = oggetto.description;
 };
 
 
 
-
-
-
-
-
-async function fetchProduct() {
-    
-}
