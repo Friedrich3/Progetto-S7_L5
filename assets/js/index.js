@@ -55,7 +55,7 @@ function init(){
         image.setAttribute("alt", "Immagine Prodotto");
         image.classList.add("card-img-top", "img-fluid");
 
-        cardBody.classList.add("card-body");
+        cardBody.classList.add("card-body","d-flex","flex-column");
         
         cardTitle.classList.add("card-title");
         cardTitle.innerText = `${array[i].name}`;
@@ -66,15 +66,15 @@ function init(){
         cardBrand.classList.add("card-text");
         cardBrand.innerText = `Brand: ${array[i].brand}`;
 
-        cardPrice.classList.add("card-text");
+        cardPrice.classList.add("card-text","fw-bold");
         cardPrice.innerText = `${array[i].price} €`;
 
-        btnModify.classList.add("btn", "btn-warning" ,"fw-bold");
+        btnModify.classList.add("btn", "btn-warning");
         btnModify.innerText = "Modifica";
         btnModify.setAttribute("href",`backoffice.html?id=${array[i]._id}`);
 
-        btnInfo.classList.add("btn", "btn-info", "fw-bold");
-        btnInfo.innerText = "More Info";
+        btnInfo.classList.add("btn", "btn-info", "mt-2");
+        btnInfo.innerText = "Scopri di più";
         btnInfo.setAttribute("href",`details.html?id=${array[i]._id}`);
 
 
@@ -84,17 +84,3 @@ function init(){
         cardContainer.appendChild(productCard);
     };
  };
-
-
-//  {
-//     "_id": "675c04f7d220710015de2f65",
-//     "name": "Iphone 15",
-//     "description": "Cellphone",
-//     "brand": "Apple",
-//     "imageUrl": "https://urlplaceholder.jpg",
-//     "price": 99,
-//     "userId": "6758714107db7300154063b1",
-//     "createdAt": "2024-12-13T09:57:11.780Z",
-//     "updatedAt": "2024-12-13T09:57:11.780Z",
-//     "__v": 0
-// }
