@@ -22,7 +22,51 @@
                 <div class="col-1 align-content-center"><a href="index.html" class="text-white align-self-baseline">Home</a></div>
             </div>
         </header>
-    
+        <main class="container">
+            <div class="row py-4 mb-3 border-bottom border-secondary">
+                <h1 id="backofficeTitle">Aggiungi prodotto</h1>
+            </div>
+            <div class="row">
+                <form action="">
+                    <fieldset>
+                        <div class="d-flex flex-column">
+                            <label for="productName" class="form-label">Nome:</label> 
+                            <input type="text" name="productName" placeholder="Nome..." id="productName" class="mb-1" required>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="productBrand" class="form-label">Brand</label>
+                            <input type="text" name="productBrand" placeholder="Brand..." id="productBrand" class="mb-1" required>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="productPrice" class="form-label">Prezzo</label>
+                            <input type="number" name="productPrice" placeholder="Prezzo...€" id="productPrice" class="mb-1" required>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="productUrl" class="form-label">URL Immagine</label>
+                            <input type="text" name="productUrl" placeholder="https://placeholder/images/nomeprodotto.jpg" id="productUrl" class="mb-1" required>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="productDescription" class="form-label">Descrizione Prodotto</label>
+                            <textarea name="productDescription" placeholder="Descrizione..." id="productDescription" rows="8" class="mb-1" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <button type="button" class="w-100 btn btn-danger" id="productDelete"><i class="bi bi-trash"></i></button>
+                            </div>
+                            <div class="col-3">
+                                
+                            </div>
+                            <div class="col-3">
+                                <button type="reset" class="w-100 fw-bold btn btn-outline-secondary">RESET</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="w-100 fw-bold btn btn-warning" id="productManage">INSERT</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </main>
     
     
     
